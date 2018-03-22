@@ -1,0 +1,33 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>用户管理</title>
+</head>
+<body>
+
+<table>
+    <thead>
+    <tr>
+        <td>ID</td>
+        <td>Name</td>
+        <td>Age</td>
+        <td>状态</td>
+        <td>上次修改时间</td>
+        <td>操作</td>
+    </tr>
+    </thead>
+    <tbody>
+    {% for u in data %}
+        <tr>
+        <td>{{ u.user_id }}</td>
+        <td>{{ u.user_name }}</td>
+        <td>{{ u.last_update }}</td>
+        <td>{{ u.state }}</td>
+        <td><a href="#">修改</a> | <a href="#">删除</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>{{ title }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'js/easyui/themes/default/easyui.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'js/easyui/themes/icon.css' %}"/>
+    <link  rel="stylesheet" type="text/css"  href="{% static 'css/login.css' %}" />
+</head>
+<body>
+    <div id="container">
+    <div id="bd">
+    	<div id="main">
+        	<div class="login-box">
+                <div id="logo"></div>
+                <h1></h1>
+                <div class="input username" id="username">
+                    <label for="userName">用户名</label>
+                    <span></span>
+                    <input type="text" id="txtUserName" />
+                </div>
+                <div class="input psw" id="psw">
+                    <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                    <span></span>
+                    <input type="password" id="txtPassword" />
+                </div>
+                <div class="input validate" id="validate">
+                    <label for="valiDate">验证码</label>
+                    <input type="text" id="txtVcode" />
+                    <div class="value" ><img style="cursor: pointer;"  src="/verifycode"  onclick="javascript:this.src='/verifycode?i='+Math.random();"/></div>
+                </div>
+                <div id="btnlogin" class="loginButton">
+                    <input type="button" class="button" value="登录"  />
+                </div>
+            </div>
+        </div>
+        <div id="ft">在使用该平台过程中有任何问题或建议，请联系我们：18011534995<br/><br/>CopyRight&nbsp;@{{ copyright }}&nbsp;中国智慧能源管理有限责任公司&nbsp;&nbsp;&nbsp;&nbsp;蜀ICP备06007775号</div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="{% static 'js/easyui/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easyui/jquery.easyui.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/jQuery.md5.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var errorCount = 0; //统计输入了几次错误的密码
+        var wheight = $(window).height();
+        var height = wheight > 445 ? wheight : 445;
+        $("#container").height(height);
+        var bdheight = (wheight - $('#bd').height()) / 2 - 20;
+        $("#bd").css('padding-top', bdheight);
+
+        //回车键
+        $(document).keyup(function (e) {
+            if (e.keyCode == 13) {
+                $("#btnlogin").trigger("click");
+            }
+        });
+        //登陆
+        $("#btnlogin").click(function (e) {
+            if (chkforms()) {
+                //封装请求参数
+                var param = {
+                    username: escape($.trim($("#txtUserName").val())),//用户名
+                    pwd: $.md5(escape($.trim($("#txtPassword").val()))), //密码
+                    code: escape($.trim($("#txtVcode").val())), //验证码
+                    errorcount: errorCount//错误次数
+                };
+                $.ajax({
+                    type: "post",
+                    url: "/login/check",
+                    dataType:"json",
+                    data: JSON.stringify(param),
+                    success: function (data) {
+                        if(data.code==1)
+                        {
+                            document.location.href = "/index";
+                        }
+                        else
+                        {
+                            //验证码错误不计数
+                            if(data.code!=99)
+                                errorCount++;
+                            alert(data.msg);
+                        }
+                    },
+                    error: function () {
+                        alert('登录出错!请稍候再试');
+                    }
+                });
+
+            }
+            else {
+                return false;
+            }
+
+        });
+
+        //判断输入框的内容
+        function chkforms() {
+            if ($("#txtUserName").val() == "") {
+                alert('请输入用户帐号！');
+                return false;
+            }
+            if ($("#txtPassword").val() == "") {
+                alert('请输入登录密码！');
+                return false;
+            }
+            //当显示验证代码时应用判断
+            if (errorCount >= 3) {
+                if ($("#txtVcode").val() == "") {
+                    alert('请输入验证代码！');
+                    return false;
+                }
+            }
+            return true;
+        }
+    });
+
+</script>
+</html>
