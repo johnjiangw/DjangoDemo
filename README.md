@@ -1,0 +1,2 @@
+# DjangoDemo
+Django+db operation
