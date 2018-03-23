@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from DjangoDemo.controls import login, index, desktop, user
+from django.urls import path, re_path
+from DjangoDemo.controls import login, index, desktop, user, role
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -25,5 +25,15 @@ urlpatterns = [
     path('index', index.index),#登录后主页
     path('desktop', desktop.index),
     path('user', user.index),
-    # path('user/edit',user.edit),
+    path('user/list', user.list),#用户列表ajax用
+    path('user/add', user.add),
+    # path('user/edit', user.edit),
+    re_path(r'^user/edit/(\d+)?$', user.edit),#编辑用户
+    path('user/remove', user.remove),
+    path('role', role.index),
+    path('role/list', role.list),#角色列表ajax用
+    path('role/add', role.add),
+    re_path(r'^role/edit/(\d+)?$', role.edit),#编辑角色
+    path('role/remove', role.remove),
+
 ]

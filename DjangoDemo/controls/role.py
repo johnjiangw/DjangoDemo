@@ -2,7 +2,7 @@
 # coding:utf-8
 # author:john
 """
-用户操作
+角色操作
 """
 import json
 from django.http import HttpResponse, JsonResponse
@@ -10,20 +10,20 @@ from django.shortcuts import render
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-from DjangoDemo.models import User
+from DjangoDemo.models import Role
 
 
 def index(request):
     """"
-    用户主界面
+    角色主界面
     """
-    return render(request, "user.html")
+    return render(request, "role.html")
 
 
 @csrf_exempt
 def list(request):
     """
-    用户列表服务端分页
+    角色列表服务端分页
     :param request:
     :return:
     """
@@ -33,8 +33,8 @@ def list(request):
         pageindex = request.POST["page"]
     if request.POST["rows"] is not None:
         pagesize = request.POST["rows"]
-    user_all = User.objects.order_by("-user_id")# 前面加'-'表示倒序
-    pager = Paginator(user_all, pagesize)
+    role_all = Role.objects.order_by("-role_id")# 前面加'-'表示倒序
+    pager = Paginator(role_all, pagesize)
     try:
         # 尝试获取请求的页数
         rows = pager.page(pageindex)
@@ -44,18 +44,17 @@ def list(request):
     except EmptyPage:
         rows = pager.page(pager.num_pages)
     # 需将对象转换一次json
-    user_list = []
+    role_list = []
     for u in rows:
-        user_list.append({
-            "user_id": u.user_id,
-            "user_name": u.user_name,
-            "age": u.age,
+        role_list.append({
+            "role_id": u.role_id,
+            "role_name": u.role_name,
             "last_update": u.last_update,
             "state": u.state,
         })
     rep = {
         "total": pager.count,
-        "rows": user_list,
+        "rows": role_list,
     }
     return JsonResponse(rep)
 
@@ -63,28 +62,26 @@ def list(request):
 @csrf_exempt
 def add(request):
     """
-    添加用户的ajax处理
+    添加角色的ajax处理
     :param request:
     :return:
     """
     # data = json.loads(request.body)# ajax post时取值
-    user_name = request.POST["user_name"]#表单post时取值
-    age = request.POST["age"]
+    role_name = request.POST["role_name"]#表单post时取值
     state = request.POST["state"]
     rep = {}
     try:
         #方式1 create
-        # User.objects.create(user_name=user_name, age=age, state=state)
+        # Role.objects.create(role_name=role_name, state=state)
         #方式2 save
-        # obj = User(user_name=user_name, age=age, state=state)
+        # obj = Role(role_name=role_name, state=state)
         # obj.save()
         #方式3 dict
         dic = {
-            'user_name': user_name,
-            'age': age,
+            'role_name': role_name,
             'state': state,
         }
-        User.objects.create(**dic)
+        Role.objects.create(**dic)
         rep["code"] = 1
         rep["msg"] = '成功'
     except:
@@ -96,9 +93,9 @@ def add(request):
 @csrf_exempt
 def edit(request, id):
     """
-    编辑用户
+    编辑角色
     :param request:
-    :param id: 用户id
+    :param id: id
     :return:
     """
     rep = {
@@ -109,15 +106,13 @@ def edit(request, id):
         try:
             #方式1 update
             # dic = {
-            #     'user_name': request.POST["user_name"],
-            #     'age': request.POST["age"],
+            #     'role_name': request.POST["role_name"],
             #     'state': request.POST["state"],
             # }
-            # User.objects.filter(user_id=id).update(**dic)
+            # Role.objects.filter(role_id=id).update(**dic)
             #方式2 save
-            obj = User.objects.get(user_id=id)
-            obj.user_name = request.POST["user_name"]
-            obj.age = request.POST["age"]
+            obj = Role.objects.get(role_id=id)
+            obj.role_name = request.POST["role_name"]
             obj.state = request.POST["state"]
             obj.save()
             rep["code"] = 1
@@ -131,7 +126,7 @@ def edit(request, id):
 @csrf_exempt
 def remove(request):
     """
-    删除用户
+    删除角色
     :param request:
     :return:
     """
@@ -141,7 +136,7 @@ def remove(request):
     }
     if request.POST["id"] is not None:
         try:
-            User.objects.filter(user_id=request.POST["id"]).delete()
+            Role.objects.filter(role_id=request.POST["id"]).delete()
             rep["code"] = 1
             rep["msg"] = "成功"
         except:

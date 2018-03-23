@@ -5,6 +5,8 @@
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static  'js/easyui/themes/default/easyui.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/easyui/themes/icon.css' %}">
+    <script type="text/javascript" src="{% static 'js/easyui/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/easyui/jquery.easyui.min.js' %}"></script>
 </head>
 <body class="easyui-layout" >
     <div class="easyui-layout" style="width:1024px;height:768px;" >
@@ -14,32 +16,31 @@
         <!--左侧菜单-->
         <div data-options="region:'west',split:true" title="功能菜单" style="width:30%;">
             <ul class="easyui-tree" id="tree">
-            <li><span>平台管理</span>
-                <ul>
-                    <li><span>用户管理</span>
-                        <ul>
-                            <li><a data-options='{"url":"/user","iconCls":""}'>用户管理</a></li>
-                            <li><a data-options='{"url":"/user/add","iconCls":""}'>添加用户</a></li>
-                        </ul>
-                    </li>
-                    <li><span>角色管理</span>
-                        <ul>
-                            <li><a data-options='{"url":"/role","iconCls":""}'>角色管理</a></li>
-                            <!--<li><a data-options='{"url":"/role/add","iconCls":""}'>添加用户</a></li>-->
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><span>综合分析</span> </li>
-            <li><span>接口管理</span> </li>
-        </ul>
+                <li><span>平台管理</span>
+                    <ul>
+                        <li><a data-options='{"url":"role","iconCls":""}'>角色管理</a></li>
+                        <li><a data-options='{"url":"user","iconCls":""}'>用户管理</a></li>
+                        <!--<li><span>用户管理</span>
+                            <ul>
+                                <li><a data-options='{"url":"/user","iconCls":""}'>用户管理</a></li>
+                            </ul>
+                        </li>
+                        <li><span>角色管理</span>
+                            <ul>
+                                <li><a data-options='{"url":"/role","iconCls":""}'>角色管理</a></li>
+                            </ul>
+                        </li>-->
+                    </ul>
+                </li>
+                <li><span>综合分析</span> </li>
+                <li><span>接口管理</span> </li>
+            </ul>
         </div>
         <!--内容页-->
         <div id="divmain" data-options="region:'center',tools:'#tab-tools'" class="easyui-tabs" ></div>
     </div>
 </body>
-<script type="text/javascript" src="{% static 'js/easyui/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/easyui/jquery.easyui.min.js' %}"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         function addTab(title, url, closable, iconClass) {

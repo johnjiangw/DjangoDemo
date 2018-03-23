@@ -25,10 +25,10 @@ def index(request):
     return render(request, "login.html", content)
 
 
-def verifycode(requset):
+def verifycode(request):
     """
     获取验证码及图片
-    :param requset:
+    :param request:
     :return:
     """
     import DjangoDemo.common.verifycode as vc
@@ -39,14 +39,14 @@ def verifycode(requset):
 
 
 @csrf_exempt
-def check(requset):
+def check(request):
     """
     ajax登陆验证
-    :param requset:
+    :param request:
     :return:
     """
     response = {}
-    req = json.loads(requset.body)
+    req = json.loads(request.body)
 
 
     # return HttpResponse(json.dumps(response), content_type="application/json")

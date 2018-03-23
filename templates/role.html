@@ -2,7 +2,7 @@
         "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <title>用户管理</title>
+    <title>角色管理</title>
     {% load staticfiles %}
     <link rel="stylesheet" type="text/css" href="{% static  'js/easyui/themes/default/easyui.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/easyui/themes/icon.css' %}">
@@ -11,13 +11,12 @@
     <script type="text/javascript" src="{% static 'js/easyui/locale/easyui-lang-zh_CN.js' %}"></script>
 </head>
 <body>
-    <table id="dg" title="用户列表" class="easyui-datagrid" style="width:700px;height:250px"
-       url="user/list" toolbar="#toolbar" pagination="true"  rownumbers="true" fitColumns="true" singleSelect="true">
+    <table id="dg" title="角色列表" class="easyui-datagrid" style="width:700px;height:250px"
+       url="role/list" toolbar="#toolbar" pagination="true"  rownumbers="true" fitColumns="true" singleSelect="true">
         <thead>
             <tr>
-                <th field="user_id" width="50">ID</th>
-                <th field="user_name" width="50">用户名</th>
-                <th field="age" width="50">年龄</th>
+                <th field="role_id" width="50">ID</th>
+                <th field="role_name" width="50">角色名</th>
                 <th field="last_update" width="50">上次修改时间</th>
                 <th field="state" width="50">状态</th>
             </tr>
@@ -27,17 +26,14 @@
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="add()">添加</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="edit()">编辑</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="remove()">删除</a>
-        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-man" plain="true" onclick="role()">角色</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-man" plain="true" onclick="user()">用户</a>
     </div>
 
     <div id="dlg" class="easyui-dialog" style="width:400px"  closed="true" buttons="#dlg-buttons">
         <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
-            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">用户信息</div>
+            <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">角色信息</div>
             <div style="margin-bottom:10px">
-                <input name="user_name" class="easyui-textbox" required="true" label="用户名:" style="width:100%">
-            </div>
-            <div style="margin-bottom:10px">
-                <input name="age" class="easyui-textbox" required="true" label="年龄:" style="width:100%">
+                <input name="role_name" class="easyui-textbox" required="true" label="角色名:" style="width:100%">
             </div>
             <div style="margin-bottom:10px">
                 <input name="state" class="easyui-textbox" required="true" label="状态:" style="width:100%">
@@ -51,16 +47,16 @@
     <script type="text/javascript">
         var url;
         function add(){
-            $('#dlg').dialog('open').dialog('center').dialog('setTitle','添加用户');
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle','添加角色');
             $('#fm').form('clear');
-            url = 'user/add';
+            url = 'role/add';
         }
         function edit(){
             var row = $('#dg').datagrid('getSelected');
             if (row){
-                $('#dlg').dialog('open').dialog('center').dialog('setTitle','编辑用户信息');
+                $('#dlg').dialog('open').dialog('center').dialog('setTitle','编辑角色信息');
                 $('#fm').form('load',row);
-                url = 'user/edit/'+row.user_id;
+                url = 'role/edit/'+row.role_id;
             }
         }
         function save(){
@@ -87,9 +83,9 @@
         function remove(){
             var row = $('#dg').datagrid('getSelected');
             if (row){
-                $.messager.confirm('确认','确认删除当前用户?',function(r){
+                $.messager.confirm('确认','确认删除当前角色?',function(r){
                     if (r){
-                        $.post('user/remove',{id:row.user_id},function(result){
+                        $.post('role/remove',{id:row.role_id},function(result){
                             if (result.code==1){
                                 $('#dg').datagrid('reload');    // reload the user data
                             } else {
