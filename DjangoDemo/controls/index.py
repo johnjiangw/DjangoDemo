@@ -15,6 +15,6 @@ def index(request):
     content = {
         "title": settings.APP_NAME,
     }
-    content["username"] = "john"
+    content["username"] = request.session['username']
     return render(request, "index.html", content)
 

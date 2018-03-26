@@ -62,7 +62,7 @@
                 //封装请求参数
                 var param = {
                     username: escape($.trim($("#txtUserName").val())),//用户名
-                    pwd: $.md5(escape($.trim($("#txtPassword").val()))), //密码
+                    pwd: escape($.trim($("#txtPassword").val())),//$.md5(escape($.trim($("#txtPassword").val()))), //密码
                     code: escape($.trim($("#txtVcode").val())), //验证码
                     errorcount: errorCount//错误次数
                 };

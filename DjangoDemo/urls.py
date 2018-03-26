@@ -18,6 +18,7 @@ from django.urls import path, re_path
 from DjangoDemo.controls import login, index, desktop, user, role
 
 urlpatterns = [
+    re_path(r'^$', login.index),#设置默认页（http://127.0.0.1:8000/）
     # path('admin/', admin.site.urls),
     path('login', login.index),#登录默认页
     path('verifycode', login.verifycode),#验证码图片
