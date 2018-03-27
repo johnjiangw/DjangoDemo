@@ -28,7 +28,6 @@ urlpatterns = [
     path('user', user.index),
     path('user/list', user.list),#用户列表ajax用
     path('user/add', user.add),
-    # path('user/edit', user.edit),
     re_path(r'^user/edit/(\d+)?$', user.edit),#编辑用户
     path('user/remove', user.remove),
     path('role', role.index),

@@ -51,8 +51,9 @@ def check(request):
         "msg": "请求参数为空",
     }
     data = json.loads(request.body)
+    code = request.session.get('code')
     # print(request.session['code'])
-    if request.session['code'] is not None and data['code'] == request.session['code']:
+    if code is not None and data['code'] == code:
         user = User.objects.filter(user_name=data['username'], pwd=data['pwd'])
         if user is None:
             rep['msg'] = '用户名或密码错误'

@@ -34,11 +34,11 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     # 'django.contrib.admin',#用户组织模块
-    # 'django.contrib.auth',#权限模块
-    # 'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'django.contrib.auth',  # 身份验证系统
+    'django.contrib.contenttypes',  # 内容类型框架
+    'django.contrib.sessions',  # session 框架
+    'django.contrib.messages',  # 消息框架
+    'django.contrib.staticfiles',  # 静态文件管理框架
     'DjangoDemo',
 ]
 
@@ -113,15 +113,15 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'#en-us
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'Asia/Chongqing'#UTC
+TIME_ZONE = 'Asia/Chongqing'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False#不用时区才会取本地时间
+USE_TZ = False  # 不用时区才会取本地时间
 
 
 # Static files (CSS, JavaScript, Images)
@@ -129,7 +129,7 @@ USE_TZ = False#不用时区才会取本地时间
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),#不能带\或/,不然join后路径错误
+    os.path.join(BASE_DIR, "static"),  # 不能带\或/,不然join后路径错误
 ]
 
 # 日志模块配置
@@ -174,10 +174,7 @@ LOGGING = {
     }
 }
 
-# 系统名称
-APP_NAME = 'DjangoDemo'
-
-# 默认列表分页数量
-PAGE_SIZE = 10
+APP_NAME = 'DjangoDemo'  # 系统名称
+PAGE_SIZE = 10  # 默认列表分页数量
 
 

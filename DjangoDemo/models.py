@@ -33,4 +33,4 @@ class User(models.Model):
     state = models.SmallIntegerField(blank=False, default=1)
     last_update = models.DateTimeField(default=timezone.now)
     email = models.EmailField(max_length=32, blank=True)
-    roles = models.ManyToManyField(Role)
+    role = models.ManyToManyField(Role)

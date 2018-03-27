@@ -33,13 +33,11 @@ def list(request):
         pageindex = request.POST["page"]
     if request.POST["rows"] is not None:
         pagesize = request.POST["rows"]
-    user_all = User.objects.order_by("-user_id")# 前面加'-'表示倒序
+    user_all = User.objects.order_by("-user_id")  # 前面加'-'表示倒序
     pager = Paginator(user_all, pagesize)
     try:
-        # 尝试获取请求的页数
-        rows = pager.page(pageindex)
-        # 请求页数错误
-    except PageNotAnInteger:
+        rows = pager.page(pageindex)  # 尝试获取请求的页数
+    except PageNotAnInteger:  # 请求页数错误
         rows = pager.page(1)
     except EmptyPage:
         rows = pager.page(pager.num_pages)
@@ -68,17 +66,17 @@ def add(request):
     :return:
     """
     # data = json.loads(request.body)# ajax post时取值
-    user_name = request.POST["user_name"]#表单post时取值
+    user_name = request.POST["user_name"]  # 表单post时取值
     age = request.POST["age"]
     state = request.POST["state"]
     rep = {}
     try:
-        #方式1 create
+        #  方式1 create
         # User.objects.create(user_name=user_name, age=age, state=state)
-        #方式2 save
+        #  方式2 save
         # obj = User(user_name=user_name, age=age, state=state)
         # obj.save()
-        #方式3 dict
+        #  方式3 dict
         dic = {
             'user_name': user_name,
             'age': age,
@@ -107,14 +105,14 @@ def edit(request, id):
     }
     if id is not None:
         try:
-            #方式1 update
+            #  方式1 update
             # dic = {
             #     'user_name': request.POST["user_name"],
             #     'age': request.POST["age"],
             #     'state': request.POST["state"],
             # }
             # User.objects.filter(user_id=id).update(**dic)
-            #方式2 save
+            #  方式2 save
             obj = User.objects.get(user_id=id)
             obj.user_name = request.POST["user_name"]
             obj.age = request.POST["age"]
