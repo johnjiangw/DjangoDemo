@@ -61,6 +61,7 @@ def check(request):
             rep["code"] = 1
             rep['msg'] = '成功'
             request.session['username'] = user[0].user_name
+            # TODO 角色权限等缓存
             del request.session['code']
     else:
         rep['msg'] = '验证码错误'

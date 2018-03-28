@@ -6,6 +6,7 @@
 """
 import os
 import io
+import string
 import random
 from PIL import Image, ImageDraw, ImageFont
 
@@ -22,7 +23,7 @@ class VerifyCode(object):
         :return: 验证码
         """
         # 定义验证码的备选值
-        chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        chars = string.digits+string.ascii_uppercase  #"ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         # 随机选取4个值作为验证码
         rand_str = ''
         for i in range(0, length):
